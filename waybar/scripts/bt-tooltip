@@ -1,0 +1,33 @@
+#!/bin/bash
+
+CONNECTED_DEVICES=$(bluetoothctl info | grep "Device" | awk '{print $2}')
+
+if [[ -z "$CONNECTED_DEVICES" ]]; then
+  echo "Disconnected"
+  exit
+fi
+
+for DEVICE in $CONNECTED_DEVICES; do
+  # Check if it’s an audio device
+  A2DP=$(bluetoothctl info "$DEVICE" | grep -i "UUID" | grep -i "Audio")
+  if [[ -n "$A2DP" ]]; then
+    BATTERY_PATH="/org/bluez/hci0/dev_$(echo $DEVICE | tr ':' '_')/battery"
+    BATTERY=$(gdbus call --system \
+      --dest org.bluez \
+      --object-path "$BATTERY_PATH" \
+      --method org.freedesktop.DBus.Properties.Get \
+      org.bluez.Battery1 Percentage 2>/dev/null | awk '{print $2}' | tr -d ',')
+
+    NAME=$(bluetoothctl info "$DEVICE" | grep "Name" | cut -d ' ' -f2-)
+
+    if [[ -n "$BATTERY" ]]; then
+      echo "$NAME Battery: $BATTERY%"
+      exit
+    else
+      echo "$NAME (No battery info)"
+      exit
+    fi
+  fi
+done
+
+echo "No Bluetooth audio connected"

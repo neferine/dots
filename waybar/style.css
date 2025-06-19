@@ -1,0 +1,28 @@
+* {
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 14px;
+  border: none;
+  box-shadow: none;
+}
+
+window#waybar {
+  background-color: rgba(145,128,161,0.85);
+  color:#ECE8EF;
+  border-bottom: 1px solid #585865;
+  transition: background-color 0.3s ease; 
+}
+
+#clock {
+  font-weight: bold;
+  margin: 0 20px;
+}
+
+#custom-bluetooth,
+#network,
+#pulseaudio,
+#cpu,
+#custom-cputemp,
+#battery {
+  margin: 0 10px;
+}
+

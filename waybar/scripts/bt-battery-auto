@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Get all connected devices
+CONNECTED_DEVICES=$(bluetoothctl info | grep "Device" | awk '{print $2}')
+
+if [[ -z "$CONNECTED_DEVICES" ]]; then
+  echo "🎧 Disconnected"
+  exit
+fi
+
+for DEVICE in $CONNECTED_DEVICES; do
+  # Format DBus path
+  DBUS_PATH="/org/bluez/hci0/dev_$(echo $DEVICE | tr ':' '_')/battery"
+
+  # Try to get battery info via DBus
+  BATTERY=$(gdbus call --system \
+    --dest org.bluez \
+    --object-path "$DBUS_PATH" \
+    --method org.freedesktop.DBus.Properties.Get \
+    org.bluez.Battery1 Percentage 2>/dev/null | awk '{print $2}' | tr -d ',')
+
+  if [[ -n "$BATTERY" ]]; then
+    # Get device name from bluetoothctl
+    NAME=$(bluetoothctl info "$DEVICE" | grep "Name" | cut -d ' ' -f2-)
+    echo "🎧 $NAME $BATTERY%"
+    exit
+  fi
+done
+
+echo "🎧 No battery info"
+

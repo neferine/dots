@@ -1,0 +1,84 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+
+  "modules-left": ["custom/spacer"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "custom/bluetooth",
+    "network",
+    "pulseaudio",
+    "cpu",
+    "custom/cputemp",
+    "battery"
+  ],
+
+  "custom/spacer": {
+    "format": " ",
+    "tooltip": false
+  },
+
+  "clock": {
+    "format": "{:%I:%M %p}",
+    "tooltip": false
+  },
+
+  "network": {
+    "format-wifi": " {essid} ({signalStrength}%) ↓{bandwidthDownBits} ↑{bandwidthUpBits}",
+    "format-ethernet": "󰈁 Wired ↓{bandwidthDownBits} ↑{bandwidthUpBits}",
+    "format-disconnected": "󰖪 Disconnected",
+    "tooltip": false,
+    "on-click": "networkmanager_dmenu"
+  },
+
+  "pulseaudio": {
+    "scroll-step": 5,
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 Muted",
+    "format-bluetooth": "󰂯 {volume}%",
+    "on-click": "pavucontrol",
+    "on-click-right": "pamixer -t",
+    "on-scroll-up": "pamixer -i 5",
+    "on-scroll-down": "pamixer -d 5",
+    "tooltip": true,
+    "format-icons": {
+      "default": ["󰕿", "󰖀", "󰕾"],
+      "muted": "󰝟"
+    }
+  },
+
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": false,
+    "on-click": "gnome-system-monitor"
+  },
+
+  "custom/cputemp": {
+    "format": " {}",
+    "exec": "~/.config/waybar/scripts/cpu-temp.sh",
+    "interval": 5,
+    "on-click": "gnome-system-monitor"
+  },
+
+  "custom/bluetooth": {
+    "exec": "~/.config/waybar/scripts/bt-tooltip",
+    "return-type": "json",
+    "interval": 20,
+    "tooltip": true,
+    "on-click": "blueman-manager"
+  },
+
+  "battery": {
+    "bat": "BAT0",
+    "adapter": "AC",
+    "interval": 30,
+    "format": "{icon} {capacity}%",
+    "format-charging": "⚡ {capacity}%",
+    "format-plugged": "🔌 {capacity}%",
+    "format-alt": "{time} remaining",
+    "tooltip": true,
+    "format-icons": ["", "", "", "", ""]
+  }
+}
+
