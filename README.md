@@ -13,6 +13,11 @@ sudo pacman -S ttf-jetbrains-mono-nerd
 ```
 sudo pacman -S bluez bluez-utils blueman 
 ```
+### Start & Enable Bluetooth
+```
+sudo systemctl start bluetooth.service 
+sudo systemctl enable bluetooth.service
+```
 # Utils
 ```
 sudo pacman -S zip unzip waybar hyprlock hyprpaper brightnessctl pavucontrol pamixer 
