@@ -8,3 +8,7 @@
 ```
 sudo pacman -S ttf-jetbrains-mono-nerd
 ```
+
+```
+sudo pacman -S zip unzip waybar hyprlock hyprpaper
+```
