@@ -22,3 +22,4 @@ sudo systemctl enable bluetooth.service
 ```
 sudo pacman -S zip unzip waybar hyprlock hyprpaper brightnessctl pavucontrol pamixer 
 ```
+###### will add bash file soon...
