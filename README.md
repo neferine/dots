@@ -9,6 +9,11 @@
 sudo pacman -S ttf-jetbrains-mono-nerd
 ```
 
+### Bluetooth
 ```
-sudo pacman -S zip unzip waybar hyprlock hyprpaper
+sudo pacman -S bluez bluez-utils blueman 
+```
+# Utils
+```
+sudo pacman -S zip unzip waybar hyprlock hyprpaper brightnessctl pavucontrol pamixer 
 ```
